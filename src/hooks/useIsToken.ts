@@ -1,7 +1,12 @@
 import { useIonRouter, useIonViewWillEnter } from '@ionic/react';
 import { getCookies } from '../utils/capacitor-plugins/cookies';
 
-const useIsToken = () => {
+type UseIsToken = () => {
+	checkIfTokenCookieExistsAndRedirectIfNot: () => void;
+	checkIfTokenCookieExistsAndRedirectIf: () => void;
+};
+
+const useIsToken: UseIsToken = () => {
 	const router = useIonRouter();
 
 	const checkIfTokenCookieExistsAndRedirectIfNot = () => {
@@ -41,9 +46,13 @@ const useIsToken = () => {
 					};
 				});
 
-				const tokenCookie = cookiesObject[1];
+				const isToken = cookiesObject.find(
+					(cookie) => cookie.key === 'token'
+				);
 
-				if (tokenCookie.key === 'token') {
+				console.log(isToken);
+
+				if (isToken) {
 					router.push('/battles');
 				} else {
 					throw new Error('Token cookie not found');

@@ -10,7 +10,7 @@ const getOneCookie = (key: string) => {
 		return cookie.includes(key);
 	});
 
-	return cookie;
+	return cookie?.split('=')[1];
 };
 
 const setCookie = (key: string, value: string) => {
@@ -25,9 +25,9 @@ const setCapacitorCookie = async (key: string, value: string) => {
 	});
 };
 
-const deleteCookie = async (url: string, key: string) => {
+const deleteCookie = async (key: string) => {
 	await CapacitorCookies.deleteCookie({
-		url,
+		url: 'https://api.which-one-battle.julienpoirier-webdev.com',
 		key,
 	});
 };
